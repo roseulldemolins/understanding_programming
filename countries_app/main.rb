@@ -1,7 +1,16 @@
 require_relative('./country_functions')
 require('json')
-countries_file = File.read('countries.json')
-countries = JSON.parse(countries_file)
+require('net/http')
+require('sinatra')
+
+uri = URI("https://restcountries.eu/rest/v2/all")
+countries_json = Net::HTTP.get(uri)
+# countries_file = File.read('countries.json')
+COUNTRIES = JSON.parse(countries_json)
+
+get '/home' do
+  erb( :home_view )
+end
 
 # country_name = name_of_first_country(countries)
 # puts country_name
@@ -18,5 +27,7 @@ countries = JSON.parse(countries_file)
 # population_asia = population_of_asia(countries)
 # puts population_asia
 
-population_africa = population_of_africa(countries)
-puts population_africa
+# population_africa = population_of_africa(countries)
+# puts population_africa
+
+# puts countries[0]
